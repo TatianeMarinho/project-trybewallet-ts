@@ -3,7 +3,8 @@ import { StateType } from '../type';
 
 function Header() {
   const { email } = useSelector((state: StateType) => state.user);
-  const totalExpense = 0;
+  const expenses = useSelector((state: StateType) => state.wallet.expenses);
+
   const coin = 'BRL';
 
   return (
@@ -12,7 +13,7 @@ function Header() {
         { email }
       </h4>
       <h4 data-testid="total-field">
-        { `Despesa Total: R$ ${totalExpense}` }
+        { `Despesa Total: R$ ${expenses.values}` }
       </h4>
       <h4 data-testid="header-currency-field">
         { coin }

@@ -1,7 +1,9 @@
 import { AnyAction } from 'redux';
-import { NEW_WALLET } from '../actions';
+import { REQUEST_ERROR,
+  REQUEST_EXPENSE_NEW, REQUEST_STARTED, REQUEST_SUCESSFUL } from '../actions';
 
-const INITIAL_WALLET = {
+export const INITIAL_WALLET = {
+  isFetching: false,
   currencies: [],
   expenses: [
     {
@@ -11,7 +13,7 @@ const INITIAL_WALLET = {
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
-      exchangeRates: '',
+      exchangeRates: {},
     },
   ],
   editor: false,
@@ -20,10 +22,31 @@ const INITIAL_WALLET = {
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const walletReducer = (state = INITIAL_WALLET, action: AnyAction) => {
   switch (action.type) {
-    case NEW_WALLET: {
+    case REQUEST_STARTED: {
       return {
         ...state,
-        wallet: action.payload,
+        isFetching: true,
+      };
+    }
+    case REQUEST_SUCESSFUL: {
+      return {
+        ...state,
+        isFetching: false,
+        currencies: action.payload,
+      };
+    }
+    case REQUEST_ERROR: {
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      };
+    }
+    case REQUEST_EXPENSE_NEW: {
+      return {
+        ...state,
+        // para adicionar mais expenses ao estado criando um array
+        expenses: [...state.expenses, action.payload],
       };
     }
     default: return state;
