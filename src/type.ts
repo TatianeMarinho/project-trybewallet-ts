@@ -24,7 +24,7 @@ export type StateType = {
 
 export type ExpensesType = {
   id: number;
-  value: number;
+  value: string;
   currency: string;
   method: string;
   tag: string;
@@ -47,8 +47,7 @@ export type Dispatch = ThunkDispatch<StateType, null, AnyAction>;
 export const FETCH_API_COIN = 'https://economia.awesomeapi.com.br/json/all';
 
 export const INICIAL_FORM_EXPENSES = {
-  id: 0,
-  value: 0,
+  value: '',
   currency: 'USD',
   method: 'Dinheiro',
   tag: 'Alimentação',

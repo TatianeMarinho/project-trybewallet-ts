@@ -5,17 +5,7 @@ import { REQUEST_ERROR,
 export const INITIAL_WALLET = {
   isFetching: false,
   currencies: [],
-  expenses: [
-    {
-      id: 0,
-      value: 0,
-      currency: '',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-      description: '',
-      exchangeRates: {},
-    },
-  ],
+  expenses: [],
   editor: false,
   idToEdit: 0,
 };

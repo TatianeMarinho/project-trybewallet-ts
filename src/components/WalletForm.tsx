@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Dispatch, ExpensesType, INICIAL_FORM_EXPENSES, StateType } from '../type';
+import { Dispatch, INICIAL_FORM_EXPENSES, StateType } from '../type';
 import { expenseNew, fetchCurrencies, fetchexchangeRates } from '../redux/actions';
 
 function WalletForm() {
-  const [formState, setFormState] = useState<ExpensesType>(INICIAL_FORM_EXPENSES);
-  const { expenses } = useSelector((state: StateType) => state.wallet);
+  const [formState, setFormState] = useState(INICIAL_FORM_EXPENSES);
+  const [idState, setIdState] = useState(0);
   const dispatch: Dispatch = useDispatch();
   const currencies = useSelector((state: StateType) => state.wallet.currencies);
 
@@ -16,10 +16,8 @@ function WalletForm() {
     setFormState({
       ...formState,
       [name]: value,
-      id: expenses.length,
     });
   };
-  console.log(formState);
 
   useEffect(() => {
     dispatch(fetchCurrencies());
@@ -29,12 +27,17 @@ function WalletForm() {
     event.preventDefault();
     // salvando o estado anterio e chamando a api
     const stateData = {
+      id: idState,
       ...formState,
       exchangeRates: await fetchexchangeRates(),
     };
     dispatch(expenseNew(stateData));
+    setIdState((newId) => newId + 1);
     setFormState(INICIAL_FORM_EXPENSES);
   };
+
+  const methodPay = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+  const tagExpense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
   return (
     <form onSubmit={ handleSubmit }>
@@ -88,9 +91,11 @@ function WalletForm() {
           onChange={ handleinput }
           data-testid="method-input"
         >
-          <option value="dinheiro">Dinheiro</option>
-          <option value="cartão de crédito">Cartão de Crédito</option>
-          <option value="cartão de débito">Cartão de Débito</option>
+          {
+            methodPay.map((method) => (
+              <option value={ method } key={ method }>{method}</option>
+            ))
+          }
         </select>
       </label>
       <label>
@@ -102,11 +107,11 @@ function WalletForm() {
           onChange={ handleinput }
           data-testid="tag-input"
         >
-          <option value="alimentação">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saúde">Saúde</option>
+          {
+            tagExpense.map((tag) => (
+              <option value={ tag } key={ tag }>{tag}</option>
+            ))
+          }
         </select>
       </label>
       <button>
