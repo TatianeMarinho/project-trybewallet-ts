@@ -44,7 +44,7 @@ function WalletForm() {
       <label>
         Valor:
         <input
-          type="number"
+          type="text"
           name="value"
           value={ formState.value }
           onChange={ handleinput }
