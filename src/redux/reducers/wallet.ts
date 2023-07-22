@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
-import { REQUEST_ERROR,
+import { REQUEST_DELETE_TABLE, REQUEST_ERROR,
   REQUEST_EXPENSE_NEW, REQUEST_STARTED, REQUEST_SUCESSFUL } from '../actions';
+import { ExpensesType } from '../../type';
 
 export const INITIAL_WALLET = {
   isFetching: false,
@@ -37,6 +38,15 @@ const walletReducer = (state = INITIAL_WALLET, action: AnyAction) => {
         ...state,
         // para adicionar mais expenses ao estado criando um array
         expenses: [...state.expenses, action.payload],
+      };
+    }
+    case REQUEST_DELETE_TABLE: {
+      const updateExpenses = state.expenses.filter(
+        (item:ExpensesType) => item.id !== action.payload,
+      );
+      return {
+        ...state,
+        expenses: updateExpenses,
       };
     }
     default: return state;

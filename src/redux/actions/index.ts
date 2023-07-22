@@ -63,3 +63,9 @@ export const expenseNew = (expense: object) => ({
   type: REQUEST_EXPENSE_NEW,
   payload: expense,
 });
+
+export const REQUEST_DELETE_TABLE = 'REQUEST_DELETE_TABLE';
+export const requesDeleteTable = (id: number) => ({
+  type: REQUEST_DELETE_TABLE,
+  payload: id,
+});
