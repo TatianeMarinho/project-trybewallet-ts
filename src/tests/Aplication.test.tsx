@@ -113,7 +113,7 @@ describe('verificando a pagina carteira', () => {
 
     const inputs = screen.getAllByRole('textbox');
 
-    expect(inputs.length).toBeGreaterThanOrEqual(2);
+    expect(inputs.length).toBeGreaterThanOrEqual(1);
   });
 
   it('existe um select para moedaspa', async () => {
